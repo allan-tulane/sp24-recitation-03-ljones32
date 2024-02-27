@@ -49,8 +49,19 @@ def quadratic_multiply(x, y):
     return _quadratic_multiply(x,y).decimal_val
 
 def _quadratic_multiply(x, y):
-    ### TODO
-    pass
+    xi, yi = x.binary_vec, y.binary_vec
+    if x.decimal_val <=1 or y.decimal_val <=1:
+      return BinaryNumber(x.decimal_val * y.decimal_val)
+    else: 
+      xi, yi = pad(xi,yi)
+      x1, x2 = split_number(xi)
+      y1, y2 = split_number(yi)
+      p1 = _quadratic_multiply(x1, y1)
+      p2 = _quadratic_multiply(x2, y2)
+      p3 = _quadratic_multiply(x1 + x2, y1 + y2)
+      p4 = p3 - p2 - p1
+      return p1 + bit_shift(p4, len(xi)//2) + p2 + p3
+      
     ###
 
 
